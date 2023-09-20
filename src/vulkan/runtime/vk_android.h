@@ -31,6 +31,25 @@
 extern "C" {
 #endif
 
+struct u_gralloc;
+
+#ifdef ANDROID
+struct u_gralloc *vk_android_get_ugralloc(void);
+struct u_gralloc **vk_android_get_ugralloc_ptr(void);
+#else
+static inline struct u_gralloc *
+vk_android_get_ugralloc(void)
+{
+   return NULL;
+}
+
+static inline struct u_gralloc **
+vk_android_get_ugralloc_ptr(void)
+{
+   return NULL;
+}
+#endif
+
 #if DETECT_OS_ANDROID && ANDROID_API_LEVEL >= 26
 
 VkFormat vk_ahb_format_to_image_format(uint32_t ahb_format);

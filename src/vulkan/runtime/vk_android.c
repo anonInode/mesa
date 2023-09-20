@@ -40,6 +40,20 @@
 
 #include <unistd.h>
 
+static struct u_gralloc *u_gralloc;
+
+struct u_gralloc *
+vk_android_get_ugralloc(void)
+{
+   return u_gralloc;
+}
+
+struct u_gralloc **
+vk_android_get_ugralloc_ptr(void)
+{
+   return &u_gralloc;
+}
+
 #if ANDROID_API_LEVEL >= 26
 #include <vndk/hardware_buffer.h>
 
