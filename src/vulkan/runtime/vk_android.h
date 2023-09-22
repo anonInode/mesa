@@ -36,6 +36,7 @@ extern "C" {
 struct u_gralloc;
 struct vk_device;
 struct vk_image;
+struct AHardwareBuffer;
 
 #ifdef ANDROID
 struct u_gralloc *vk_android_get_ugralloc(void);
@@ -48,6 +49,11 @@ VkResult vk_android_import_anb(struct vk_device *device,
 
 VkResult vk_android_get_anb_layout(
    const VkImageCreateInfo *pCreateInfo,
+   VkImageDrmFormatModifierExplicitCreateInfoEXT *out,
+   VkSubresourceLayout *out_layouts, int max_planes);
+
+VkResult vk_android_get_ahb_layout(
+   struct AHardwareBuffer *ahardware_buffer,
    VkImageDrmFormatModifierExplicitCreateInfoEXT *out,
    VkSubresourceLayout *out_layouts, int max_planes);
 
@@ -76,6 +82,15 @@ vk_android_import_anb(struct vk_device *device,
 static inline VkResult
 vk_android_get_anb_layout(
    const VkImageCreateInfo *pCreateInfo,
+   VkImageDrmFormatModifierExplicitCreateInfoEXT *out,
+   VkSubresourceLayout *out_layouts, int max_planes)
+{
+   return VK_ERROR_FEATURE_NOT_PRESENT;
+}
+
+static inline VkResult
+vk_android_get_ahb_layout(
+   struct AHardwareBuffer *ahardware_buffer,
    VkImageDrmFormatModifierExplicitCreateInfoEXT *out,
    VkSubresourceLayout *out_layouts, int max_planes)
 {
